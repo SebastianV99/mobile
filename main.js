@@ -34,20 +34,18 @@ L.control.scale({
 }).addTo(map);
 
 //Geolocation
-map.locate({setView: true, maxZoom: 16});
+map.locate({ setView: true, maxZoom: 16 });
 
 //next
-function onLocationFound(evt) {
-    console.log(evt)
+
+map.on('locationfound', function (evt) {
     let radius = evt.accuracy;
 
     L.marker(evt.latlng).addTo(map)
-        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+        .bindPopup(`You are within ${Math.round(radius)} meters from this point`).openPopup();
 
     L.circle(evt.latlng, radius).addTo(map);
-}
-
-map.on('locationfound', onLocationFound);
+});
 
 //error location
 function onLocationError(evt) {
