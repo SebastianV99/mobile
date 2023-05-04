@@ -32,3 +32,27 @@ L.marker([
 L.control.scale({
     imperial: false,
 }).addTo(map);
+
+//Geolocation
+map.locate({setView: true, maxZoom: 16});
+
+//next
+function onLocationFound(e) {
+    var radius = e.accuracy;
+
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(e.latlng, radius).addTo(map);
+}
+
+map.on('locationfound', onLocationFound);
+
+//error location
+function onLocationError(e) {
+    alert(e.message);
+}
+
+map.on('locationerror', onLocationError)
+
+//Weltkarte
